@@ -1,0 +1,8 @@
+Berhentikan waktu, kalau lagi tidak di mulai -- oke
+Sama persis kan set point dengan RPM (belum tau revisi apa enggak)
+Tambahkan slider -- oke
+Tambahkan updown nilai +5 -5 -- oke
+Value jadi RPM -- oke
+Start menjadi auto Record -- oke
+Tombol record jadi tombol save -- oke
+Lebarkan GRAFIK UI -- oke

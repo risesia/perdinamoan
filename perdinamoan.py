@@ -63,7 +63,7 @@ class DynamoControlApp:
         self.fig, self.ax = plt.subplots(figsize=(14, 5))  # Adjust the width and height as needed
         self.ax.set_ylim(0, 7000)
         self.ax.set_xlabel("Time")
-        self.ax.set_ylabel("Value")
+        self.ax.set_ylabel("RPM")
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.graph_frame)
         self.canvas.get_tk_widget().pack()
 
