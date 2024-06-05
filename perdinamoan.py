@@ -60,7 +60,7 @@ class DynamoControlApp:
         self.graph_frame.pack(pady=10)
         
         # Create the graph
-        self.fig, self.ax = plt.subplots()
+        self.fig, self.ax = plt.subplots(figsize=(14, 5))  # Adjust the width and height as needed
         self.ax.set_ylim(0, 7000)
         self.ax.set_xlabel("Time")
         self.ax.set_ylabel("Value")
