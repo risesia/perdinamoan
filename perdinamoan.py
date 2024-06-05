@@ -70,8 +70,18 @@ class DynamoControlApp:
         self.rpm_entry_label = tk.Label(self.root, text="Enter RPM:", font=("Helvetica", 12), bg='#80ed99')
         self.rpm_entry_label.pack(pady=5)
         
-        self.rpm_entry = tk.Entry(self.root, font=("Helvetica", 12))
-        self.rpm_entry.pack(pady=5)
+        self.rpm_entry_frame = tk.Frame(self.root, bg='#80ed99')
+        self.rpm_entry_frame.pack(pady=5)
+
+        self.rpm_minus_button = tk.Button(self.rpm_entry_frame, text="-", font=("Helvetica", 12), command=self.decrement_rpm)
+        self.rpm_minus_button.pack(side=tk.LEFT)
+
+        self.rpm_entry = tk.Entry(self.rpm_entry_frame, font=("Helvetica", 12), width=10)
+        self.rpm_entry.pack(side=tk.LEFT)
+        self.rpm_entry.bind("<KeyRelease>", self.update_slider)
+
+        self.rpm_plus_button = tk.Button(self.rpm_entry_frame, text="+", font=("Helvetica", 12), command=self.increment_rpm)
+        self.rpm_plus_button.pack(side=tk.LEFT)
 
         slider_frame = tk.Frame(self.root, bg='#80ed99')
         slider_frame.pack(pady=5)
@@ -96,10 +106,27 @@ class DynamoControlApp:
         self.save_button = tk.Button(self.root, text="Save", font=("Helvetica", 12), command=self.save_recording, bg='#80ed99')
         self.save_button.pack(pady=10)
 
+    def increment_rpm(self):
+        current_rpm = int(self.rpm_entry.get())
+        new_rpm = min(current_rpm + 5, 5000)
+        self.update_rpm_entry(new_rpm)
+        self.rpm_slider.set(new_rpm)
+
+    def decrement_rpm(self):
+        current_rpm = int(self.rpm_entry.get())
+        new_rpm = max(current_rpm - 5, 0)
+        self.update_rpm_entry(new_rpm)
+        self.rpm_slider.set(new_rpm)
+
     def update_rpm_entry(self, value):
         self.rpm_entry.delete(0, tk.END)
         self.rpm_entry.insert(0, value)
-        
+
+    def update_slider(self, event):
+        rpm_value = self.rpm_entry.get()
+        if rpm_value.isdigit():
+            self.rpm_slider.set(int(rpm_value))
+
     def start_monitoring(self):
         rpm = self.rpm_entry.get()
         if rpm.isdigit():
