@@ -1,0 +1,4 @@
+Python 3.12
+pip 24.0
+pip install openpyxl	#untuk save file .xsl
+pip install pandas	#untuk graph
