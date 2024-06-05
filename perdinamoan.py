@@ -72,6 +72,18 @@ class DynamoControlApp:
         
         self.rpm_entry = tk.Entry(self.root, font=("Helvetica", 12))
         self.rpm_entry.pack(pady=5)
+
+        slider_frame = tk.Frame(self.root, bg='#80ed99')
+        slider_frame.pack(pady=5)
+
+        self.rpm_slider_min_label = tk.Label(slider_frame, text="Min: 0", font=("Helvetica", 12), bg='#80ed99')
+        self.rpm_slider_min_label.pack(side=tk.LEFT, padx=10)
+
+        self.rpm_slider = tk.Scale(slider_frame, from_=0, to=5000, orient=tk.HORIZONTAL, length=400, command=self.update_rpm_entry)
+        self.rpm_slider.pack(side=tk.LEFT)
+
+        self.rpm_slider_max_label = tk.Label(slider_frame, text="Max: 5000", font=("Helvetica", 12), bg='#80ed99')
+        self.rpm_slider_max_label.pack(side=tk.LEFT, padx=10)
         
         self.set_rpm_button = tk.Button(self.root, text="START", font=("Helvetica", 12), command=self.start_monitoring, bg='#80ed99')
         self.set_rpm_button.pack(pady=10)
@@ -83,6 +95,10 @@ class DynamoControlApp:
         # Create the "Save" button
         self.save_button = tk.Button(self.root, text="Save", font=("Helvetica", 12), command=self.save_recording, bg='#80ed99')
         self.save_button.pack(pady=10)
+
+    def update_rpm_entry(self, value):
+        self.rpm_entry.delete(0, tk.END)
+        self.rpm_entry.insert(0, value)
         
     def start_monitoring(self):
         rpm = self.rpm_entry.get()
