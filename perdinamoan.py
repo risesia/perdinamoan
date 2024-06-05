@@ -80,6 +80,10 @@ class DynamoControlApp:
         self.stop_button = tk.Button(self.root, text="Stop", font=("Helvetica", 12), command=self.stop_monitoring, bg='#80ed99')
         self.stop_button.pack(pady=10)
 
+        # Create the "Save" button
+        self.save_button = tk.Button(self.root, text="Save", font=("Helvetica", 12), command=self.save_recording, bg='#80ed99')
+        self.save_button.pack(pady=10)
+        
     def start_monitoring(self):
         rpm = self.rpm_entry.get()
         if rpm.isdigit():
@@ -104,12 +108,15 @@ class DynamoControlApp:
             try:
                 self.arduino.write(b'0#')
                 self.is_monitoring = False
-                self.is_recording = False
-                self.save_data_to_excel()
             except serial.SerialException as e:
                 messagebox.showerror("Communication Error", f"Failed to write to {self.serial_port}\n{e}")
         else:
             messagebox.showerror("Connection Error", "Arduino is not connected.")
+        
+    def save_recording(self):
+        self.is_recording = False
+        self.save_data_to_excel()
+        self.clear_data()
         
     def clear_data(self):
         self.data = {"Set Point": [], "Output": []}
