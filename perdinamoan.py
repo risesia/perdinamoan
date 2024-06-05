@@ -80,14 +80,11 @@ class DynamoControlApp:
         self.stop_button = tk.Button(self.root, text="Stop", font=("Helvetica", 12), command=self.stop_monitoring, bg='#80ed99')
         self.stop_button.pack(pady=10)
 
-        # Create the "Record" button
-        self.record_button = tk.Button(self.root, text="Record", font=("Helvetica", 12), command=self.toggle_record, bg='#80ed99')
-        self.record_button.pack(pady=10)
-        
     def start_monitoring(self):
         rpm = self.rpm_entry.get()
         if rpm.isdigit():
             self.is_monitoring = True
+            self.is_recording = True
             self.set_rpm()
         else:
             messagebox.showerror("Invalid Input", "Please enter a valid RPM value.")
@@ -107,6 +104,8 @@ class DynamoControlApp:
             try:
                 self.arduino.write(b'0#')
                 self.is_monitoring = False
+                self.is_recording = False
+                self.save_data_to_excel()
             except serial.SerialException as e:
                 messagebox.showerror("Communication Error", f"Failed to write to {self.serial_port}\n{e}")
         else:
@@ -121,14 +120,6 @@ class DynamoControlApp:
         self.ax.set_xlabel("Time")
         self.ax.set_ylabel("Value")
         self.canvas.draw()
-
-    def toggle_record(self):
-        self.is_recording = not self.is_recording
-        if self.is_recording:
-            self.record_button.config(text="Stop Recording")
-        else:
-            self.record_button.config(text="Record")
-            self.save_data_to_excel()
 
     def save_data_to_excel(self):
         file_path = filedialog.asksaveasfilename(defaultextension=".xlsx",
