@@ -168,7 +168,7 @@ class DynamoControlApp:
         self.ax.clear()
         self.ax.set_ylim(0, 7000)
         self.ax.set_xlabel("Time")
-        self.ax.set_ylabel("Value")
+        self.ax.set_ylabel("RPM")
         self.canvas.draw()
 
     def save_data_to_excel(self):
